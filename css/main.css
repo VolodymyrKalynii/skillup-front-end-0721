@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;900&display=swap');
+
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+.wrap{
+    max-width: 1130px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.block1{
+    background: url('../img/block1_man.png') no-repeat right 76%, 
+    url('../img/block1_field.png') no-repeat right bottom;
+    padding: 11.5px 0 369px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 254px;
+    align-items: center;
+}
+
+.navLink{
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 24px;
+    color: #505F98;
+    text-decoration: none;
+    /* margin-right: 60px; */
+}
+
+/* .navLink:last-child {
+    margin-right: 0;
+} */
+
+.navLink:not(:last-child) {
+    margin-right: 56px;
+}
+
+.btn{
+    background: #111B47;
+    border-radius: 2px;
+    border: 2px solid #111B47;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 26.3px;
+    text-align: center;
+    color: #FFFFFF;
+    min-width: 189px;
+    padding: 3px 15px;
+}
+
+.btn.small{
+    font-size: 12px;
+    line-height: 18px;
+    min-width: 160px;
+}
+
+.btn:hover{
+    border-color: #091133;
+    background: rgba(0,0,0,0);
+    color: #091133;
+}
+
+
+.logo{
+    font-style: normal;
+    font-weight: 900;
+    font-size: 26px;
+    line-height: 38px;
+    color: #37447E;
+    margin-right: 85px;
+}
+
+.block1_top{
+    max-width: 539px;
+    margin-left: -2px;
+}
+
+
+.mainTitle{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 50px;
+    line-height: 66px;
+    /* or 132% */
+
+    letter-spacing: 1px;
+
+    color: #091133;
+    margin-bottom: 20px;
+}
+
+.text{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 31px;
+    /* or 167% */
+    color: #505F98;
+    margin-bottom: 13px;
+}
+
+.buttons{
+    margin-top: 69px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.buttons .btn{
+    margin-bottom: 10px;
+}
+
+.buttons :first-child{
+    margin-right: 30px;
+}
+
+.mobileMenu{
+    display: none;
+}
+
+/* hr{
+    width: 600px;
+} */
+
+@media screen and (max-width: 1200px) {
+    .block1{
+        background: url('../img/block1_man.png') no-repeat right center/40%, 
+        url('../img/block1_field.png') no-repeat right bottom;
+    }
+
+    .header{
+        padding-bottom: 156px;
+    }
+}
+
+@media screen and (max-width: 992px)  {
+    .header{
+        padding-bottom: 56px;
+    }
+
+    .desctopMenu{
+        display: none;
+    }
+
+    .mobileMenu{
+        display: block;
+    }
+}
+
+@media screen and (max-width: 768px)  {
+    .mainTitle{
+        font-size: 40px;
+        line-height: 50px;
+    }
+}
+
