@@ -1,0 +1,15 @@
+$font-size: 1rem;
+$font-color: red;
+
+html {
+  font-size: $font-size;
+  color: $font-color;
+
+  h1{
+    color: blue;
+  }
+}
+
+body{
+    background: tan;
+}
