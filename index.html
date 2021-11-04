@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        const name = 'Vova';
+        const sumNumber = (a, b) => a + b;
+
+        ReactDOM.render(
+            React.createElement('div', null, [
+                React.createElement('h1', {style: {border: '1px solid red'}}, ['hello', name, sumNumber(5, 6)]),
+                React.createElement('p', null, ['Test 2']),
+            ]),
+            document.querySelector('#app')
+        );
+
+        ReactDOM.render(
+            <div>
+                <h1 style={{border: '1px solid red'}} > hello {name}, {sumNumber(5, 6)} </h1>
+                <p>Test</p>
+            </div>,
+            document.querySelector('#app')
+        );
+    </script>
+</body>
+</html>
