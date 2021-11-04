@@ -1,8 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 module.exports = (env, options) => {
+    const isProd = options.mode === 'production';
+
     const conf = {
         entry: {
             main: path.resolve(__dirname, './src/index.js'),
@@ -10,25 +12,17 @@ module.exports = (env, options) => {
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: '[name].bundle.js',
+            clean: true,
         },
+        devtool: isProd ? false : 'eval-cheap-module-source-map',
         module: {
             rules: [
                 // JavaScript
                 {
-                    test: /\.js$/,
+                    test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
-                    use: ['babel-loader'],
+                    use: ['babel-loader', 'eslint-loader'],
                 },
-                    //other rules
-                // CSS, PostCSS, Sass
-                {
-                    test: /\.(scss|css)$/,
-                    use: [
-                        'style-loader', 
-                        'css-loader',  
-                        'sass-loader'],
-                },
-
             ],
         },    
         plugins: [
@@ -37,13 +31,24 @@ module.exports = (env, options) => {
                 template: path.resolve(__dirname, './src/template.html'), // шаблон
                 filename: 'index.html', // название выходного файла
             }),
+            new webpack.SourceMapDevToolPlugin({
+                filename: '[file].map',
+                test: /\.jsx?|\.js?$/,
+                exclude: [
+                    '*.css', '*.styles.min.css', '*.scss'
+                ]
+            }),
         ],
         devServer: {
             historyApiFallback: true,
             open: true,
             compress: true,
-            hot: true,
-            port: 8080,
+            client: {
+                overlay: {
+                    errors: true,
+                    warnings: false,
+                },
+            }
         },
 
     };
