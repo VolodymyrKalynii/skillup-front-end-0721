@@ -9,6 +9,9 @@ module.exports = (env, options) => {
         entry: {
             main: path.resolve(__dirname, './src/index.js'),
         },
+        resolve: {
+            extensions: ['*', '.js', '.jsx'],
+        },
         output: {
             path: path.resolve(__dirname, './dist'),
             filename: '[name].bundle.js',
