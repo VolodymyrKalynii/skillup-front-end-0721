@@ -1,6 +1,5 @@
 import React from 'react';
-import {MainTitle} from './parts/main-title/MainTitle.jsx';
-import {SubTitle} from './parts/sub-title/SubTitle.jsx';
+import {MainTitle, UserInfo, SubTitle} from './parts';
 
 export const App = (p) => {
     console.log('p', p);
@@ -9,7 +8,8 @@ export const App = (p) => {
 
     return (
         <div style={{background}}>
-            App {name} {age}
+            {/*App {name} {age}*/}
+            <UserInfo/>
             <MainTitle/>
             <SubTitle/>
         </div>
