@@ -21,11 +21,11 @@ const getScssLoaders = (isProd) => {
     def.push({
         loader: 'css-loader',
         //раскоментировать чтобы заработали модульные стили
-        // options: {
-        //     modules: {
-        //         localIdentName: localIdentClassesName(isProd)
-        //     }
-        // }
+        options: {
+            modules: {
+                localIdentName: localIdentClassesName(isProd)
+            }
+        }
     });
 
     if (isProd) {
