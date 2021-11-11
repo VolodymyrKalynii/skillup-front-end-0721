@@ -4,7 +4,11 @@ import {TaskItem} from './task-item/TaskItem';
 export const TaskList = ({tasks}) => (
         <div>
             {
-                tasks.map((task) => <TaskItem key={task.id} {...task} />)
+                tasks.map((task) =>
+                    <TaskItem
+                        key={task.id}
+                        {...task}
+                        toggleImportantHandler={() => {console.log(task.id, task.isImportant);}} />)
             }
         </div>
     );

@@ -1,7 +1,11 @@
 import React from 'react';
 
 export const TaskItem = (p) => {
-    const {id, taskName, isImportant} = p;
+    const {id, taskName, isImportant, toggleImportantHandler} = p;
+
+    const delHandler = () => {
+        console.log(id, taskName);
+    };
 
     return (
         <div style={{border: '1px solid'}}>
@@ -9,9 +13,23 @@ export const TaskItem = (p) => {
             <p>name: {taskName}</p>
             <p>isImportant: {isImportant.toString()}</p>
             <div>
-                <button>del</button>
-                <button>toggle isImportant</button>
+                <button onClick={delHandler}>del</button>
+                <button onClick={toggleImportantHandler}>toggle isImportant</button>
             </div>
         </div>
     );
 };
+
+// const foo = (p) => {
+//     const {id, taskName, isImportant} = p;
+//
+//     const bar = () => {
+//         console.log(id);
+//     };
+//
+//     bar();
+//
+//     return taskName + id;
+// };
+//
+// foo({id: '5555', taskName: 'name'});
