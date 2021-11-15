@@ -1,10 +1,12 @@
 import React from 'react';
 
 export const TaskItem = (p) => {
-    const {id, taskName, isImportant, toggleImportantHandler} = p;
+    const {id, taskName, isImportant, delTask, toggleImportantHandler} = p;
 
     const delHandler = () => {
-        console.log(id, taskName);
+        // console.log(id, taskName);
+
+        delTask(id);
     };
 
     return (

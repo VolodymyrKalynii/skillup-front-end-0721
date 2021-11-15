@@ -1,10 +1,10 @@
 import React from 'react';
 
-export const ControlsBar = () => (
+export const ControlsBar = ({changeDisplayedList}) => (
         <div>
             <input/>
-            <button>all tasks</button>
-            <button>active tasks</button>
-            <button>closed tasks</button>
+            <button onClick={() => changeDisplayedList('all')}>all tasks</button>
+            <button onClick={() => changeDisplayedList('active')}>active tasks</button>
+            <button onClick={() => changeDisplayedList('closed')}>closed tasks</button>
         </div>
     );
