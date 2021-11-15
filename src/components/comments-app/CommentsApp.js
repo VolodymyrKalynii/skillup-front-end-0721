@@ -1,47 +1,92 @@
 import React from 'react';
-import {CommentsList} from './parts/comments-list/CommentsList';
 
-const comments = [
-    {
-        id: 1,
-        userName: 'User1',
-        userAge: 12,
-        comment: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, molestiae?',
-        likeQty: 10,
-        dislikeQty: 5
-    },
-    {
-        id: 2,
-        userName: 'User2',
-        userAge: 22,
-        comment: 'Привет мир',
-        likeQty: 100,
-        dislikeQty: 15
-    },
-    {
-        id: 3,
-        userName: 'User3',
-        userAge: 35,
-        comment: 'Шла Саша по шоссе',
-        likeQty: 1,
-        dislikeQty: 3
-    }
-];
+import {CommentsList, Controls} from './parts';
+import {loadComments} from './utils/load-comments';
+
+// const selectOptions = [
+//     {
+//         text: 'банан',
+//         value: 'banana'
+//     },
+//     {
+//         text: 'апельсин',
+//         value: 'orange'
+//     },
+//     {
+//         text: 'яблоко',
+//         value: 'apple'
+//     }
+// ];
 
 export class CommentsApp extends React.Component {
-    state = {
-        isShowCounter: true,
-        counter: 0,
-        text: 'someText'
-    };
+    constructor(p) {
+        super(p);
+
+        this.state = {
+            comments: [],
+            filterStr: ''
+        };
+    }
+
+    componentDidMount() {
+        loadComments().then((data) => {
+
+            this.setState({
+                comments: data
+            });
+        });
+    }
+
+    filterInputHandler = (filterStr) => {
+
+        this.setState({
+            filterStr
+        });
+    }
+
+    addComment = (comment) => {
+        const cb = (state) => {
+            const {comments} = state;
+
+            const newComments = [...comments];
+
+            newComments.push(comment);
+
+            return {
+                comments: newComments
+            };
+        };
+
+        this.setState(cb);
+    }
 
     render() {
+        const {comments, filterStr} = this.state;
+
+        if (comments.length === 0) return <div>load...</div>;
+
+        const filteredComments = filterCommentsByText(comments, filterStr);
+
+        console.log('filteredComments', filteredComments);
 
         return (
             <div>
-                <CommentsList comments={comments} />
+                {filterStr}
+                <Controls filterStr={filterStr} filterInputHandler={this.filterInputHandler} addComment={this.addComment}/>
+                {/*<Controls selectOptions={selectOptions}/>*/}
+                <CommentsList comments={filteredComments} />
             </div>
         );
     }
-
 }
+
+const filterCommentsByText = (comments, filterStr) => {
+
+    console.log('comments', comments);
+
+    if (filterStr === '') {
+        return comments;
+    }
+
+    return comments.filter(({comment}) => comment.includes(filterStr));
+};
