@@ -33,7 +33,7 @@ export class ClicksCounter extends React.Component{
         const {clicksQty, textColor} = this.state;
         const {incrementAppCounter} = this.props;
 
-        console.log('this.props ClicksCounter', this.props);
+        console.log('this.props ClicksCounterFunc', this.props);
         console.log('render');
 
         return (
@@ -66,4 +66,21 @@ export class ClicksCounter extends React.Component{
 //     console.log(1);
 //     console.log(this);
 //     this.setState({clicksQty: 50});
+// }
+
+// export class ClicksCounter2 extends React.Component{
+//     state = {
+//         counter: 0
+//     };
+//
+//     render() {
+//         const {clicksQty} = this.state;
+//
+//         return (
+//             <div>
+//                 <p style={{color: 'red'}}>{clicksQty}</p>
+//                 <button onClick={() => this.setState({clicksQty: clicksQty + 1})}>increment</button>
+//             </div>
+//         );
+//     }
 // }

@@ -23,7 +23,7 @@ export class CommentsApp extends React.Component {
         super(p);
 
         this.state = {
-            comments: [],
+            comments: null,
             filterStr: ''
         };
     }
@@ -93,7 +93,7 @@ export class CommentsApp extends React.Component {
     render() {
         const {comments, filterStr} = this.state;
 
-        if (comments.length === 0) return <div>load...</div>;
+        if (!comments) return <div>load...</div>;
 
         const filteredComments = filterCommentsByText(comments, filterStr);
 

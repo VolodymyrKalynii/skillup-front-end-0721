@@ -1,0 +1,1 @@
+export {ClicksCounterFunc} from './clicks-counter-func/ClicksCounterFunc';
