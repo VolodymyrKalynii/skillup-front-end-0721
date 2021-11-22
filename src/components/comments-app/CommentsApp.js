@@ -2,6 +2,7 @@ import React from 'react';
 
 import {CommentsList, Controls} from './parts';
 import {loadComments} from './utils/load-comments';
+import {sleep} from '../../functions/functions';
 
 export class CommentsApp extends React.Component {
     constructor(p) {
@@ -67,6 +68,8 @@ export class CommentsApp extends React.Component {
 
     render() {
         const {comments, filterStr, isShowCommentsWithLike} = this.state;
+
+        console.log('render');
 
         if (!comments) return <div>load...</div>;
 

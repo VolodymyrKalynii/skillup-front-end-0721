@@ -1,11 +1,14 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useLayoutEffect, useMemo, useState} from 'react';
+import PropTypes from 'prop-types';
 
-export const ClicksCounterFunc = ({initialCounterValue, initialCounterColor}) => {
+import {sleep, someHardFunction} from '../../../../functions/functions';
+
+export const ClicksCounterFunc = ({initialCounterValue = 0, initialCounterColor = 'red'}) => {
     const [counter, setCounter] = useState(initialCounterValue);
     const [counterColor, setCounterColor] = useState(initialCounterColor);
 
     useEffect(() => {
-        console.log('after render');
+        console.log('3 after render');
 
         return () => {
             console.log('unmount after render');
@@ -13,7 +16,7 @@ export const ClicksCounterFunc = ({initialCounterValue, initialCounterColor}) =>
     });
 
     useEffect(() => {
-        console.log('counter was changed');
+        console.log('4 counter was changed');
 
         return () => {
             console.log('unmount counter was changed');
@@ -21,12 +24,30 @@ export const ClicksCounterFunc = ({initialCounterValue, initialCounterColor}) =>
     }, [counter]);
 
     useEffect(() => {
-        console.log('after first render');
+        console.log('5 after first render');
+        //
+        // sleep(3000);
+        //
+        // console.log('2 after sleep');
 
         return () => {
             console.log('unmount');
         };
     }, []);
+
+    useLayoutEffect(() => {
+        console.log('1 after first render Layout');
+
+        sleep(3000);
+
+        console.log('2 after sleep');
+
+        return () => {
+            console.log('unmount');
+        };
+    }, []);
+
+    const someResult = useMemo(() => someHardFunction(counter), [counter]);
 
     const handler = () => {
         setCounter((prevCounter) => prevCounter + 1);
@@ -41,45 +62,19 @@ export const ClicksCounterFunc = ({initialCounterValue, initialCounterColor}) =>
 
     console.log('render');
 
-    // const [counterObj, setCounterObj] = useState({counter: 10, counterColor: 'orange'});
-    // const {counter, counterColor} = counterObj;
-    // console.log('counterObj', counterObj);
-    //
-    // const handler = () => {
-    //     setCounterObj((prevCounterObj) => {
-    //         const {counter} = prevCounterObj;
-    //
-    //         return {
-    //             ...prevCounterObj,
-    //             counter: counter + 1
-    //         };
-    //     });
-    // };
-    //
-    // const handler2 = () => {
-    //     const rndNumber = Math.random();
-    //     const color = rndNumber > .5 ? 'red' : 'blue';
-    //
-    //     setCounterObj((prevCounterObj) => {
-    //         const {counter} = prevCounterObj;
-    //
-    //         return {
-    //             ...prevCounterObj,
-    //             counterColor: color
-    //         };
-    //     });
-    // };
-
     return (
         <div>
-            r: {r}
+            <p>someResult: {someResult}</p>
             <p style={{color: counterColor}}>{counter}</p>
             <Btn onClick={handler} text={'increment'}/>
             <Btn onClick={handler2} text={'changeColor'}/>
-            {/*<button onClick={handler}>increment</button>*/}
-            {/*<button onClick={handler2}>changeColor</button>*/}
         </div>
     );
+};
+
+ClicksCounterFunc.propTypes = {
+    initialCounterValue: PropTypes.number,
+    initialCounterColor: PropTypes.string
 };
 
 const Btn = ({text, onClick}) => {

@@ -6,14 +6,14 @@ import {CommentsAppFunc} from '../comments-app/CommentsAppFunc';
 
 export const App = () => (
     <div>
-        <CommentsApp/>
+        {/*<CommentsApp/>*/}
         {/*<CommentsAppFunc/>*/}
-        {/*<ClicksCounterFunc initialCounterValue={0} initialCounterColor={'red'}/>*/}
+        <ClicksCounterFunc/>
         {/**/}
 
         {/*<ClicksCounterFunc initialCounterValue={17} initialCounterColor={'green'}/>*/}
         {/*<ClicksCounter/>*/}
-        <Toggle/>
+        {/*<Toggle/>*/}
     </div>
 );
 
