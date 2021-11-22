@@ -3,28 +3,14 @@ import React from 'react';
 import {CommentsList, Controls} from './parts';
 import {loadComments} from './utils/load-comments';
 
-// const selectOptions = [
-//     {
-//         text: 'банан',
-//         value: 'banana'
-//     },
-//     {
-//         text: 'апельсин',
-//         value: 'orange'
-//     },
-//     {
-//         text: 'яблоко',
-//         value: 'apple'
-//     }
-// ];
-
 export class CommentsApp extends React.Component {
     constructor(p) {
         super(p);
 
         this.state = {
             comments: null,
-            filterStr: ''
+            filterStr: '',
+            isShowCommentsWithLike: true
         };
     }
 
@@ -38,7 +24,6 @@ export class CommentsApp extends React.Component {
     }
 
     filterInputHandler = (filterStr) => {
-
         this.setState({
             filterStr
         });
@@ -65,47 +50,42 @@ export class CommentsApp extends React.Component {
 
         const newComments = comments.map((comment) => {
             const {id, isLiked} = comment;
-            // if (comment.id === id) {
-            //     comment.isLiked = !comment.isLiked;
-            // }
-
-            // return comment;
-
-            // return comment.userName;
-
-            // return comment;
-
             return {
                 ...comment,
                 isLiked: id === changingCommentId ? !isLiked : isLiked
             };
-
         });
-
-        console.log('comments', comments);
-        console.log('newComments', newComments);
 
         this.setState({
             comments: newComments
         });
     };
 
+    toggleIsShowCommentsWithLike = () => {
+        this.setState((prevState) => ({isShowCommentsWithLike: !prevState.isShowCommentsWithLike}));
+    }
+
     render() {
-        const {comments, filterStr} = this.state;
+        const {comments, filterStr, isShowCommentsWithLike} = this.state;
 
         if (!comments) return <div>load...</div>;
 
-        const filteredComments = filterCommentsByText(comments, filterStr);
+        const filterP = {
+            filterStr,
+            isShowCommentsWithLike
+        };
 
-        // console.log('filteredComments', filteredComments);
+        const filteredComments = filterComments(comments, filterP);
 
         return (
             <div>
                 {filterStr}
-                {/*<Controls*/}
-                {/*    filterStr={filterStr}*/}
-                {/*    filterInputHandler={this.filterInputHandler}*/}
-                {/*    addComment={this.addComment}/>*/}
+                <Controls
+                    filterStr={filterStr}
+                    filterInputHandler={this.filterInputHandler}
+                    addComment={this.addComment}/>
+                <button onClick={this.toggleIsShowCommentsWithLike}>toggle showing like comments</button>
+                <p>Show comments only with like: {isShowCommentsWithLike.toString()}</p>
                 {/*<Controls selectOptions={selectOptions}/>*/}
                 <CommentsList comments={filteredComments} toggleIsLiked={this.toggleIsLiked} />
             </div>
@@ -113,13 +93,21 @@ export class CommentsApp extends React.Component {
     }
 }
 
+const filterComments = (comments, filterP) => {
+    const {filterStr, isShowCommentsWithLike} = filterP;
+
+    const filteredComments = filterCommentsByText(comments, filterStr);
+
+    return filterByLikes(filteredComments, isShowCommentsWithLike);
+};
+
 const filterCommentsByText = (comments, filterStr) => {
-
-    // console.log('comments', comments);
-
     if (filterStr === '') {
         return comments;
     }
 
     return comments.filter(({comment}) => comment.includes(filterStr));
 };
+
+const filterByLikes = (comments, isShowCommentsWithLike) =>
+    comments.filter(({isLiked}) => isLiked === isShowCommentsWithLike);
