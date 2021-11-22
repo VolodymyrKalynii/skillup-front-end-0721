@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect,useState} from 'react';
 
 export const ClicksCounterFunc = ({initialCounterValue, initialCounterColor}) => {
     const [counter, setCounter] = useState(initialCounterValue);
@@ -72,6 +72,7 @@ export const ClicksCounterFunc = ({initialCounterValue, initialCounterColor}) =>
 
     return (
         <div>
+            r: {r}
             <p style={{color: counterColor}}>{counter}</p>
             <Btn onClick={handler} text={'increment'}/>
             <Btn onClick={handler2} text={'changeColor'}/>
@@ -90,26 +91,3 @@ const Btn = ({text, onClick}) => {
         <button onClick={handler}>{text}</button>
     );
 };
-
-const user = {
-    name: 'Vova',
-    age: 28
-};
-
-// const name = user.name;
-// const age = user.age;
-
-const {name, age} = user;
-
-// console.log('name', name);
-// console.log('age', age);
-
-const arr = ['Vova222222', 28222];
-
-// const name2 = arr[0];
-// const age2 = arr[1];
-
-const [name2, age2] = arr;
-
-// console.log('name2', name2);
-// console.log('age2', age2);
