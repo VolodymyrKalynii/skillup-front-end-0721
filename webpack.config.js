@@ -99,7 +99,8 @@ module.exports = (env, options) => {
             new HtmlWebpackPlugin({
                 title: 'webpack Boilerplate',
                 template: path.resolve(__dirname, './src/template.html'), // шаблон
-                filename: 'index.html', // название выходного файла
+                filename: 'index.html', // название выходного файла,
+                base: '/'
             }),
             new webpack.SourceMapDevToolPlugin({
                 filename: '[file].map',

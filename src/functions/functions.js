@@ -13,7 +13,7 @@ export const sleep = (duration) => {
 
 export const someHardFunction = (n) => {
     console.log('calculating');
-    sleep(2000);
+    // sleep(2000);
 
     return n * 2;
 };

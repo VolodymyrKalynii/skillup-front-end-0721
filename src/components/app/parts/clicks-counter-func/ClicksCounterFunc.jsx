@@ -38,7 +38,7 @@ export const ClicksCounterFunc = ({initialCounterValue = 0, initialCounterColor 
     useLayoutEffect(() => {
         console.log('1 after first render Layout');
 
-        sleep(3000);
+        // sleep(3000);
 
         console.log('2 after sleep');
 
