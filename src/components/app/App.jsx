@@ -3,23 +3,22 @@ import {CommentsApp} from '../comments-app/CommentsApp';
 import {ClicksCounterFunc, Products, Planets, Planet, Product} from './parts';
 import {ClicksCounter} from './parts/clicks-counter/ClicksCounter';
 import {CommentsAppFunc} from '../comments-app/CommentsAppFunc';
-import {BrowserRouter, Routes, Route, NavLink} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, NavLink, Outlet} from 'react-router-dom';
 
 export const paths = {
     main: '/',
-    clicksCounter: '/clicks-counter',
-    products: '/products',
-    planets: '/planets',
+    clicksCounter: 'clicks-counter',
+    products: 'products',
+    planets: 'planets',
     comments: {
-        comments: '/comments',
-        commentsAll: 'all',
+        comments: 'comments/',
         commentsAdd: 'add',
         commentsNew: 'new'
     }
 };
 
 /*
-* switch -> Routes
+* Switch -> Routes
 * component -> element
 * component={Main} -> element={<Main/>}
 * для 404
@@ -30,28 +29,25 @@ export const paths = {
 export const App = () => (
     <div>
         <BrowserRouter>
-            <Nav/>
             <Routes>
-                <Route path={paths.main} element={<Main/>}/>
-                <Route path={paths.clicksCounter} element={<ClicksCounterFunc/>}/>
-                <Route path={`${paths.comments.comments}/`} element={<Nav2/>}>
-                    <Route path={paths.comments.commentsAll} element={<CommentsApp/>}/>
-                    <Route path={paths.comments.commentsNew} element={<AddComment/>}/>
-                    <Route path={paths.comments.commentsAdd} element={<NewComment/>}/>
+                <Route path={paths.main} element={<Nav/>}>
+                    <Route index element={<Main/>} />
+                    <Route path={paths.clicksCounter} element={<ClicksCounterFunc/>}/>
+                    <Route path={`${paths.comments.comments}`} element={<Nav2/>}>
+                        <Route index element={<CommentsApp/>} />
+                        <Route path={paths.comments.commentsNew} element={<AddComment/>}/>
+                        <Route path={paths.comments.commentsAdd} element={<NewComment/>}/>
+                    </Route>
+                    <Route path={`${paths.products}`} element={<Products/>}/>
+                    <Route path={`${paths.products}/:id`} element={<Product/>}/>
+                    <Route path={paths.planets} element={<Planets/>}/>
+                    <Route path={`${paths.planets}/:id`} element={<Planet/>}/>
                 </Route>
-                <Route path={`${paths.products}`} element={<Products/>}/>
-                <Route path={`${paths.products}/:id`} element={<Product/>}/>
-                <Route path={paths.planets} element={<Planets/>}/>
-                <Route path={`${paths.planets}/:id`} element={<Planet/>}/>
+                <Route path={'*'} element={<div>404</div>}/>
             </Routes>
         </BrowserRouter>
     </div>
 );
-
-const style = {
-    fontWeight: 'bold',
-    color: 'red'
-};
 
 const getNavLinkStyle = ({isActive}) => isActive
     ? {
@@ -66,14 +62,16 @@ const Nav = () => (
         <NavLink style={getNavLinkStyle} to={paths.comments.comments}> comments</NavLink>
         <NavLink style={getNavLinkStyle} to={paths.products}> products</NavLink>
         <NavLink style={getNavLinkStyle} to={paths.planets}> planets</NavLink>
+        <Outlet />
     </div>
 );
 
 const Nav2 = () => (
     <div>
-        <NavLink style={getNavLinkStyle} to={paths.comments.commentsAll}> comments</NavLink>
+        <NavLink style={getNavLinkStyle} to={'./'}> comments</NavLink>
         <NavLink style={getNavLinkStyle} to={paths.comments.commentsNew}> NewComment</NavLink>
         <NavLink style={getNavLinkStyle} to={paths.comments.commentsAdd}> AddComment</NavLink>
+        <Outlet />
     </div>
 );
 
