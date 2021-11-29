@@ -2,18 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {CommentItem} from './parts/comment-item/CommentItem';
 
-export const CommentsList = ({comments, toggleIsLiked}) => (
+export const CommentsList = ({comments}) => (
         <div>
-            {comments.map((comment) =>
+            {comments.map((comment) => <React.Fragment key={comment.id}>
                 <CommentItem
-                    key={comment.id}
                     id={comment.id}
                     userName={comment.userName}
                     userAge={comment.userAge}
                     isLiked={comment.isLiked}
                     comment={comment.comment}
-                    toggleIsLiked={toggleIsLiked}
-                />)}
+                />
+            </React.Fragment> )}
         </div>
     );
 
@@ -26,6 +25,5 @@ CommentsList.propTypes = {
             comment: PropTypes.string.isRequired,
             isLiked: PropTypes.bool.isRequired
         })
-    ).isRequired,
-    toggleIsLiked: PropTypes.func.isRequired
+    ).isRequired
 };

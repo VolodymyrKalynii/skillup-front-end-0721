@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 
-export const Controls = ({filterStr, filterInputHandler, addComment}) => {
+import {ControlsContext} from '../../CommentsApp';
+
+export const Controls = ({filterStr, filterInputHandler}) => {
 
     const handler = (e) => {
         console.log(e.target.value);
@@ -11,9 +13,15 @@ export const Controls = ({filterStr, filterInputHandler, addComment}) => {
     return (
         <div>
             <input value={filterStr} onChange={handler} type='text'/>
-            <NewComment addComment={addComment}/>
+            <NewCommentWrap/>
         </div>
     );
+};
+
+const NewCommentWrap = () => {
+    const {addComment} = useContext(ControlsContext);
+
+    return <NewComment addComment={addComment}/>;
 };
 
 class NewComment extends React.Component {
@@ -37,11 +45,11 @@ class NewComment extends React.Component {
     btnHandler = () => {
         const {userName, comment} = this.state;
 
-        console.log(userName, comment);
-
         this.props.addComment({
             userName,
             comment,
+            isLiked: false,
+            userAge: Math.random(),
             id: Date.now()
         });
     }

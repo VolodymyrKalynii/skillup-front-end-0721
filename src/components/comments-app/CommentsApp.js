@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {createContext} from 'react';
 
 import {CommentsList, Controls} from './parts';
 import {loadComments} from './utils/load-comments';
 import {sleep} from '../../functions/functions';
+import {SomeContext} from './context';
+
+export const ControlsContext = createContext(null);
+
+export let SomeStore = {
+
+};
 
 export class CommentsApp extends React.Component {
     constructor(p) {
@@ -11,6 +18,7 @@ export class CommentsApp extends React.Component {
         this.state = {
             comments: null,
             filterStr: '',
+            someInputStr: '',
             isShowCommentsWithLike: true
         };
     }
@@ -27,6 +35,12 @@ export class CommentsApp extends React.Component {
     filterInputHandler = (filterStr) => {
         this.setState({
             filterStr
+        });
+    }
+
+    someInputStrHandler = (e) => {
+        this.setState({
+            someInputStr: e.target.value
         });
     }
 
@@ -67,7 +81,7 @@ export class CommentsApp extends React.Component {
     }
 
     render() {
-        const {comments, filterStr, isShowCommentsWithLike} = this.state;
+        const {comments, filterStr, isShowCommentsWithLike, someInputStr} = this.state;
 
         console.log('render');
 
@@ -80,17 +94,32 @@ export class CommentsApp extends React.Component {
 
         const filteredComments = filterComments(comments, filterP);
 
+        SomeStore = {
+            toggleIsLiked: this.toggleIsLiked,
+            someProp: 'test',
+            someInputStr
+        };
+
+        console.log('CommentsApp SomeStore', SomeStore);
+
         return (
             <div>
+
                 {filterStr}
-                <Controls
-                    filterStr={filterStr}
-                    filterInputHandler={this.filterInputHandler}
-                    addComment={this.addComment}/>
+                <ControlsContext.Provider value={{addComment: this.addComment}}>
+                    <Controls
+                        filterStr={filterStr}
+                        filterInputHandler={this.filterInputHandler}/>
+                </ControlsContext.Provider>
                 <button onClick={this.toggleIsShowCommentsWithLike}>toggle showing like comments</button>
                 <p>Show comments only with like: {isShowCommentsWithLike.toString()}</p>
-                {/*<Controls selectOptions={selectOptions}/>*/}
-                <CommentsList comments={filteredComments} toggleIsLiked={this.toggleIsLiked} />
+                <input value={someInputStr} onChange={this.someInputStrHandler}/>
+                <p>{someInputStr}</p>
+                <div>
+                    <SomeContext.Provider value={{toggleIsLiked: this.toggleIsLiked, someInputStr}}>
+                        <CommentsList comments={filteredComments} />
+                    </SomeContext.Provider>
+                </div>
             </div>
         );
     }

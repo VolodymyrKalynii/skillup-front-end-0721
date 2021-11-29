@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {useContext, memo} from 'react';
 import PropTypes from 'prop-types';
 
-export const CommentItem = (p) => {
-    const {id, userName, userAge, comment, isLiked, toggleIsLiked} = p;
+import {SomeContext} from '../../../../context';
+import {SomeStore} from '../../../../CommentsApp';
+
+const CommentItemWrap = (p) => {
+    const {id, userName, userAge, comment, isLiked} = p;
+    const {toggleIsLiked, someInputStr} = useContext(SomeContext);
+    // const {toggleIsLiked, someInputStr} = SomeStore;
+
+    console.log('SomeStore', SomeStore);
 
     const btnHandler = () => {
 
@@ -14,6 +21,9 @@ export const CommentItem = (p) => {
             <p>userName: {userName}</p>
             <p>userAge: {userAge}</p>
             <p>comment: {comment}</p>
+            <p>someInputStr: {someInputStr}</p>
+            {/*<p>isShowCommentsWithLike: {isShowCommentsWithLike.toString()}</p>*/}
+            {/*<p>filterStr: {filterStr}</p>*/}
             <button onClick={btnHandler}>
                 isLiked: {isLiked.toString()}
             </button>
@@ -22,11 +32,12 @@ export const CommentItem = (p) => {
     );
 };
 
+export const CommentItem = memo(CommentItemWrap);
+
 CommentItem.propTypes = {
     id: PropTypes.number.isRequired,
     userAge: PropTypes.number.isRequired,
     userName: PropTypes.string.isRequired,
     comment: PropTypes.string.isRequired,
-    isLiked: PropTypes.bool.isRequired,
-    toggleIsLiked: PropTypes.func.isRequired
+    isLiked: PropTypes.bool.isRequired
 };

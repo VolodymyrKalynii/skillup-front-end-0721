@@ -4,6 +4,7 @@ import {ClicksCounterFunc, Products, Planets, Planet, Product} from './parts';
 import {ClicksCounter} from './parts/clicks-counter/ClicksCounter';
 import {CommentsAppFunc} from '../comments-app/CommentsAppFunc';
 import {BrowserRouter, Routes, Route, NavLink, Outlet} from 'react-router-dom';
+import {ErrorBoundary} from '../error-boundary/ErrorBoundary';
 
 export const paths = {
     main: '/',
@@ -19,28 +20,30 @@ export const paths = {
 
 export const App = () => (
     <div>
-        <BrowserRouter>
-            <Routes>
-                <Route path={paths.main} element={<Nav/>}>
-                    <Route index element={<Main/>} />
-                    <Route path={paths.clicksCounter} element={<ClicksCounterFunc/>}/>
-                    <Route path={`${paths.comments.comments}`} element={<Nav2/>}>
-                        <Route index element={<CommentsApp/>} />
-                        <Route path={paths.comments.commentsNew} element={<AddComment/>}/>
-                        <Route path={paths.comments.commentsAdd} element={<NewComment/>}/>
-                    </Route>
-                    <Route path={`${paths.products}`} element={<Products/>}>
-                        <Route path={':id'} element={<Product/>}/>
-                    </Route>
+        <ErrorBoundary>
+            <BrowserRouter>
+                <Routes>
+                    <Route path={paths.main} element={<Nav/>}>
+                        <Route index element={<Main/>} />
+                        <Route path={paths.clicksCounter} element={<ClicksCounterFunc/>}/>
+                        <Route path={`${paths.comments.comments}`} element={<Nav2/>}>
+                            <Route index element={<CommentsApp/>} />
+                            <Route path={paths.comments.commentsNew} element={<AddComment/>}/>
+                            <Route path={paths.comments.commentsAdd} element={<NewComment/>}/>
+                        </Route>
+                        <Route path={`${paths.products}`} element={<Products/>}>
+                            <Route path={':id'} element={<Product/>}/>
+                        </Route>
 
-                    <Route path={paths.planets} element={<Outlet />}>
-                        <Route index element={<Planets/>}/>
-                        <Route path={':id'} element={<Planet/>}/>
+                        <Route path={paths.planets} element={<Outlet />}>
+                            <Route index element={<Planets/>}/>
+                            <Route path={':id'} element={<Planet/>}/>
+                        </Route>
                     </Route>
-                </Route>
-                {/*<Route path={'*'} element={<div>404</div>}/>*/}
-            </Routes>
-        </BrowserRouter>
+                    {/*<Route path={'*'} element={<div>404</div>}/>*/}
+                </Routes>
+            </BrowserRouter>
+        </ErrorBoundary>
     </div>
 );
 

@@ -8,3 +8,7 @@ ReactDOM.render(
     <App/>,
     document.getElementById('app')
 );
+
+window.addEventListener('error', (e) => {
+    console.log('e', e);
+});
