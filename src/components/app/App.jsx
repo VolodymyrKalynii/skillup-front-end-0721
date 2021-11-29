@@ -17,15 +17,6 @@ export const paths = {
     }
 };
 
-/*
-* Switch -> Routes
-* component -> element
-* component={Main} -> element={<Main/>}
-* для 404
-*  -> path='*'
-*
-* */
-
 export const App = () => (
     <div>
         <BrowserRouter>
