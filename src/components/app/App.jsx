@@ -29,12 +29,16 @@ export const App = () => (
                         <Route path={paths.comments.commentsNew} element={<AddComment/>}/>
                         <Route path={paths.comments.commentsAdd} element={<NewComment/>}/>
                     </Route>
-                    <Route path={`${paths.products}`} element={<Products/>}/>
-                    <Route path={`${paths.products}/:id`} element={<Product/>}/>
-                    <Route path={paths.planets} element={<Planets/>}/>
-                    <Route path={`${paths.planets}/:id`} element={<Planet/>}/>
+                    <Route path={`${paths.products}`} element={<Products/>}>
+                        <Route path={':id'} element={<Product/>}/>
+                    </Route>
+
+                    <Route path={paths.planets} element={<Outlet />}>
+                        <Route index element={<Planets/>}/>
+                        <Route path={':id'} element={<Planet/>}/>
+                    </Route>
                 </Route>
-                <Route path={'*'} element={<div>404</div>}/>
+                {/*<Route path={'*'} element={<div>404</div>}/>*/}
             </Routes>
         </BrowserRouter>
     </div>
@@ -48,11 +52,13 @@ const getNavLinkStyle = ({isActive}) => isActive
 
 const Nav = () => (
     <div>
-        <NavLink style={getNavLinkStyle} to={paths.main}> на главную</NavLink>
-        <NavLink style={getNavLinkStyle} to={paths.clicksCounter}> clicks-counter</NavLink>
-        <NavLink style={getNavLinkStyle} to={paths.comments.comments}> comments</NavLink>
-        <NavLink style={getNavLinkStyle} to={paths.products}> products</NavLink>
-        <NavLink style={getNavLinkStyle} to={paths.planets}> planets</NavLink>
+        <div className={'links'}>
+            <NavLink style={getNavLinkStyle} to={paths.main}> на главную</NavLink>
+            <NavLink style={getNavLinkStyle} to={paths.clicksCounter}> clicks-counter</NavLink>
+            <NavLink style={getNavLinkStyle} to={paths.comments.comments}> comments</NavLink>
+            <NavLink style={getNavLinkStyle} to={paths.products}> products</NavLink>
+            <NavLink style={getNavLinkStyle} to={paths.planets}> planets</NavLink>
+        </div>
         <Outlet />
     </div>
 );

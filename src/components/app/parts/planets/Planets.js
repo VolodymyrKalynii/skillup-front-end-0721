@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {NavLink, Route, Switch, useParams} from 'react-router-dom';
+import {NavLink, Outlet, Route, Switch, useParams} from 'react-router-dom';
 import {ClicksCounterFunc} from '../clicks-counter-func/ClicksCounterFunc';
 import {paths} from '../../App';
 
@@ -7,16 +7,20 @@ export const Planets = () => {
     const [data, setData] = useState(null);
 
     useEffect(() => {
+        let isSubscribed = true;
 
         fetch('https://swapi.dev/api/planets')
             .then((res) => res.json())
             .then(({results}) => {
-                console.log('data', results);
+                console.log('data', results, isSubscribed);
 
-                setData(results);
+                if (isSubscribed) {
+                    setData(results);
+                }
             });
 
         return () => {
+            isSubscribed = false;
         };
     }, []);
 
@@ -28,11 +32,11 @@ export const Planets = () => {
             {
                 data.map((planet, idx) => (
                     <p key={planet.name}>
-                        {/*<a href={`${paths.planets}/${idx + 1}`}>{planet.name}</a>*/}
-                        <NavLink to={`${paths.planets}/${idx + 1}`}>{planet.name}</NavLink>
+                        <NavLink to={`${idx + 1}`}>{planet.name} {idx + 1}</NavLink>
                     </p>
                 ))
             }
+
         </div>
     );
 };
@@ -60,6 +64,7 @@ export const Planet = () => {
 
     return (
         <div>
+            <NavLink to={'../'}>back</NavLink>
             Planet {id}
             <p>name: {name}</p>
             <p>diameter: {diameter}</p>

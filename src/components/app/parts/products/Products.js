@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, Route, Routes, useParams} from 'react-router-dom';
+import {NavLink, Outlet, Route, Routes, useParams} from 'react-router-dom';
 import {ClicksCounterFunc} from '../clicks-counter-func/ClicksCounterFunc';
 import {paths} from '../../App';
 
@@ -10,8 +10,9 @@ export const Products = () => {
     return (
         <div>
             {arr.map((productId) => (
-                <NavLink key={productId} to={`${paths.products}/${productId}`}>product {productId}</NavLink>
+                <NavLink key={productId} to={`${productId}`}>product {productId}</NavLink>
             ))}
+            <Outlet />
         </div>
     );
 };
