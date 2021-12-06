@@ -8,14 +8,14 @@ const field = document.querySelector('#filed');
 const input = document.querySelector('#input');
 const textField = document.querySelector('#textField');
 
-field.innerHTML = getStore().counterReducer.counter.toString();
-textField.innerHTML = getStore().inputTextReducer.inputText.toString();
+field.innerHTML = getStore().counterReducer.value.toString();
+textField.innerHTML = getStore().inputTextReducer.value.toString();
 
-input.value = getStore().inputTextReducer.inputText.toString();
+input.value = getStore().inputTextReducer.value.toString();
 
 store.subscribe(() => {
-    field.innerHTML = getStore().counterReducer.counter;
-    textField.innerHTML = getStore().inputTextReducer.inputText;
+    field.innerHTML = getStore().counterReducer.value;
+    textField.innerHTML = getStore().inputTextReducer.value;
 });
 
 btnInc.addEventListener('click', () => {

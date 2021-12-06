@@ -1,5 +1,4 @@
-import {createStore, applyMiddleware, combineReducers} from 'redux';
-import {composeWithDevTools, devToolsEnhancer} from 'redux-devtools-extension';
+import {configureStore} from '@reduxjs/toolkit';
 import {reducers} from './reducers';
 
 const logMD = ({dispatch}) => (dispatch) => (action) => {
@@ -21,11 +20,9 @@ const detDocumentTitleMD = ({dispatch}) => (dispatch) => (action) => {
     return dispatch(action);
 };
 
-// export const store = createStore(reducer, applyMiddleware(logMD, detDocumentTitleMD));
-export const store = createStore(
-    combineReducers(reducers),
-    composeWithDevTools(applyMiddleware(logMD, detDocumentTitleMD))
-);
-// export const store = createStore(reducer, devToolsEnhancer());
+export const store = configureStore({
+    reducer: reducers,
+    middleware: [logMD, detDocumentTitleMD]
+});
 
 export const getStore = () => store.getState();
