@@ -4,126 +4,11 @@ import {CommentsList, Controls} from './parts';
 import {loadComments} from './utils/load-comments';
 import {sleep} from '../../functions/functions';
 import {SomeContext} from './context';
+import {connect} from 'react-redux';
+import {changeSomeInputStrAction} from '../../store/actions/comments';
+import {actions} from '../../store/reducers/comments';
 
 export const ControlsContext = createContext(null);
-
-export let SomeStore = {
-
-};
-
-export class CommentsApp extends React.Component {
-    constructor(p) {
-        super(p);
-
-        this.state = {
-            comments: null,
-            filterStr: '',
-            someInputStr: '',
-            isShowCommentsWithLike: true
-        };
-    }
-
-    componentDidMount() {
-        loadComments().then((data) => {
-
-            this.setState({
-                comments: data
-            });
-        });
-    }
-
-    filterInputHandler = (filterStr) => {
-        this.setState({
-            filterStr
-        });
-    }
-
-    someInputStrHandler = (e) => {
-        this.setState({
-            someInputStr: e.target.value
-        });
-    }
-
-    addComment = (comment) => {
-        const cb = (state) => {
-            const {comments} = state;
-
-            const newComments = [...comments];
-
-            newComments.push(comment);
-
-            return {
-                comments: newComments
-            };
-        };
-
-        this.setState(cb);
-    }
-
-    toggleIsLiked = (changingCommentId) => {
-        const {comments} = this.state;
-
-        const newComments = comments.map((comment) => {
-            const {id, isLiked} = comment;
-            return {
-                ...comment,
-                isLiked: id === changingCommentId ? !isLiked : isLiked
-            };
-        });
-
-        this.setState({
-            comments: newComments
-        });
-    };
-
-    toggleIsShowCommentsWithLike = () => {
-        this.setState((prevState) => ({isShowCommentsWithLike: !prevState.isShowCommentsWithLike}));
-    }
-
-    render() {
-        const {comments, filterStr, isShowCommentsWithLike, someInputStr} = this.state;
-
-        console.log('render');
-
-        if (!comments) return <div>load...</div>;
-
-        const filterP = {
-            filterStr,
-            isShowCommentsWithLike
-        };
-
-        const filteredComments = filterComments(comments, filterP);
-
-        SomeStore = {
-            toggleIsLiked: this.toggleIsLiked,
-            someProp: 'test',
-            someInputStr
-        };
-
-        console.log('CommentsApp SomeStore', SomeStore);
-
-        return (
-            <div>
-
-                {filterStr}
-                <ControlsContext.Provider value={{addComment: this.addComment}}>
-                    <Controls
-                        filterStr={filterStr}
-                        filterInputHandler={this.filterInputHandler}/>
-                </ControlsContext.Provider>
-                <button onClick={this.toggleIsShowCommentsWithLike}>toggle showing like comments</button>
-                <p>Show comments only with like: {isShowCommentsWithLike.toString()}</p>
-                <input value={someInputStr} onChange={this.someInputStrHandler}/>
-                <p>{someInputStr}</p>
-                <div>
-                    <SomeContext.Provider value={{toggleIsLiked: this.toggleIsLiked, someInputStr}}>
-                        <CommentsList comments={filteredComments} />
-                    </SomeContext.Provider>
-                </div>
-            </div>
-        );
-    }
-}
 
 const filterComments = (comments, filterP) => {
     const {filterStr, isShowCommentsWithLike} = filterP;
@@ -143,3 +28,115 @@ const filterCommentsByText = (comments, filterStr) => {
 
 const filterByLikes = (comments, isShowCommentsWithLike) =>
     comments.filter(({isLiked}) => isLiked === isShowCommentsWithLike);
+
+export let SomeStore = {
+
+};
+
+class CommentsAppBody extends React.Component {
+    componentDidMount() {
+        const {setComments} = this.props;
+
+        loadComments().then((data) => {
+            setComments(data);
+        });
+    }
+
+    someInputStrHandler = (e) => {
+        // this.setState({
+        //     someInputStr: e.target.value
+        // });
+
+        // changeSomeInputStrAction(e.target.value);
+
+        this.props.changeSomeInputStr(e.target.value);
+    }
+
+    addComment = (comment) => {
+        const {addComment} = this.props;
+
+        addComment(comment);
+
+        // const {commentsReducer, setComments} = this.props;
+
+        // const {comments} = commentsReducer;
+        //
+        // const newComments = [...comments];
+        //
+        // newComments.push(comment);
+        //
+        // setComments(newComments);
+    }
+
+    toggleIsLiked = (changingCommentId) => {
+        const {commentsReducer, setComments} = this.props;
+        const {comments} = commentsReducer;
+
+        const newComments = comments.map((comment) => {
+            const {id, isLiked} = comment;
+            return {
+                ...comment,
+                isLiked: id === changingCommentId ? !isLiked : isLiked
+            };
+        });
+
+        setComments(newComments);
+    };
+
+    toggleIsShowCommentsWithLike = () => {
+        const {commentsReducer, toggleIsShowCommentsWithLike} = this.props;
+        const {isShowCommentsWithLike} = commentsReducer;
+
+        toggleIsShowCommentsWithLike(!isShowCommentsWithLike);
+    }
+
+    render() {
+        const {someInputStr, filterStr, comments, isShowCommentsWithLike} = this.props.commentsReducer;
+
+        if (!comments) return <div>load...</div>;
+
+        const filterP = {
+            filterStr,
+            isShowCommentsWithLike
+        };
+
+        const filteredComments = filterComments(comments, filterP);
+
+        SomeStore = {
+            toggleIsLiked: this.toggleIsLiked,
+            someProp: 'test',
+            someInputStr
+        };
+
+        return (
+            <div>
+                {filterStr}
+                <ControlsContext.Provider value={{addComment: this.addComment}}>
+                    <Controls/>
+                </ControlsContext.Provider>
+                <button onClick={this.toggleIsShowCommentsWithLike}>toggle showing like comments</button>
+                <p>Show comments only with like: {isShowCommentsWithLike.toString()}</p>
+                <input value={someInputStr} onChange={this.someInputStrHandler}/>
+                <p>{someInputStr}</p>
+                <div>
+                    <SomeContext.Provider value={{toggleIsLiked: this.toggleIsLiked, someInputStr}}>
+                        <CommentsList comments={filteredComments} />
+                    </SomeContext.Provider>
+                </div>
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = (store) => ({
+    commentsReducer: store.commentsReducer
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    changeSomeInputStr: (str) => dispatch(actions.changeSomeInputStr(str)),
+    setComments: (comments) => dispatch(actions.setComments(comments)),
+    addComment: (comment) => dispatch(actions.addComment(comment)),
+    toggleIsShowCommentsWithLike: (isShowCommentsWithLike) => dispatch(actions.toggleIsShowCommentsWithLike(isShowCommentsWithLike))
+});
+
+export const CommentsApp = connect(mapStateToProps, mapDispatchToProps)(CommentsAppBody);

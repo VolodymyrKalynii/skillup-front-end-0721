@@ -1,13 +1,15 @@
 import React, {useContext} from 'react';
 
 import {ControlsContext} from '../../CommentsApp';
+import {useDispatch, useSelector} from 'react-redux';
+import {actions} from '../../../../store/reducers/comments';
 
-export const Controls = ({filterStr, filterInputHandler}) => {
+export const Controls = () => {
+    const dispatch = useDispatch();
+    const filterStr = useSelector((state) => state.commentsReducer.filterStr);
 
     const handler = (e) => {
-        console.log(e.target.value);
-
-        filterInputHandler(e.target.value);
+        dispatch(actions.setFilterStr(e.target.value));
     };
 
     return (
