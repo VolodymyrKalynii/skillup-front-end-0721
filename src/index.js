@@ -35,3 +35,27 @@ btnRnd.addEventListener('click', () => {
 input.addEventListener('input', (e) => {
     setInputTextAction(e.target.value);
 });
+
+const users = [
+    {
+        name: 'Vova',
+        status: 'admin'
+    },
+    {
+        name: 'Ivan',
+    }
+];
+
+const transformedUsers = users.map((user) => {
+    // if (!user.status) user.status = 'student';
+    //
+    // return user;
+
+    return {
+        ...user,
+        status: user.status ? user.status : 'student'
+    };
+});
+
+console.log('users', users);
+console.log('transformedUsers', transformedUsers);
