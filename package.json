@@ -17,7 +17,10 @@
     "url": "https://github.com/VolodymyrKalynii/skillup-front-end-0721/issues"
   },
   "homepage": "https://github.com/VolodymyrKalynii/skillup-front-end-0721#readme",
-  "browserslist": "> 1%, not dead, IE 11",
+  "browserslist": [
+    "last 20 version",
+    "> 1%"
+  ],
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/plugin-proposal-class-properties": "^7.16.0",
