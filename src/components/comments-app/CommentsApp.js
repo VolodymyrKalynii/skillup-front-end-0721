@@ -29,9 +29,7 @@ const filterCommentsByText = (comments, filterStr) => {
 const filterByLikes = (comments, isShowCommentsWithLike) =>
     comments.filter(({isLiked}) => isLiked === isShowCommentsWithLike);
 
-export let SomeStore = {
-
-};
+export let SomeStore = {};
 
 class CommentsAppBody extends React.Component {
     componentDidMount() {
@@ -50,7 +48,7 @@ class CommentsAppBody extends React.Component {
         // changeSomeInputStrAction(e.target.value);
 
         this.props.changeSomeInputStr(e.target.value);
-    }
+    };
 
     addComment = (comment) => {
         const {addComment} = this.props;
@@ -66,7 +64,7 @@ class CommentsAppBody extends React.Component {
         // newComments.push(comment);
         //
         // setComments(newComments);
-    }
+    };
 
     toggleIsLiked = (changingCommentId) => {
         const {commentsReducer, setComments} = this.props;
@@ -88,7 +86,7 @@ class CommentsAppBody extends React.Component {
         const {isShowCommentsWithLike} = commentsReducer;
 
         toggleIsShowCommentsWithLike(!isShowCommentsWithLike);
-    }
+    };
 
     render() {
         const {someInputStr, filterStr, comments, isShowCommentsWithLike} = this.props.commentsReducer;
@@ -120,7 +118,7 @@ class CommentsAppBody extends React.Component {
                 <p>{someInputStr}</p>
                 <div>
                     <SomeContext.Provider value={{toggleIsLiked: this.toggleIsLiked, someInputStr}}>
-                        <CommentsList comments={filteredComments} />
+                        <CommentsList comments={filteredComments}/>
                     </SomeContext.Provider>
                 </div>
             </div>

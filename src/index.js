@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from './components/app/App.jsx';
 
+import 'antd/dist/antd.css';
 import './scss/main.scss';
 import {store} from './store/store';
 import {incAction} from './store/actions/counter';

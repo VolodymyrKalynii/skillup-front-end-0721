@@ -1,5 +1,6 @@
 import React, {useContext, memo} from 'react';
 import PropTypes from 'prop-types';
+import {Button} from 'antd';
 
 import {SomeContext} from '../../../../context';
 import {SomeStore} from '../../../../CommentsApp';
@@ -24,9 +25,9 @@ const CommentItemWrap = (p) => {
             <p>someInputStr: {someInputStr}</p>
             {/*<p>isShowCommentsWithLike: {isShowCommentsWithLike.toString()}</p>*/}
             {/*<p>filterStr: {filterStr}</p>*/}
-            <button onClick={btnHandler}>
+            <Button onClick={btnHandler} type={isLiked ? 'primary' : 'dashed'}>
                 isLiked: {isLiked.toString()}
-            </button>
+            </Button>
             <hr/>
         </div>
     );

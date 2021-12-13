@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Provider} from 'react-redux';
 import {CommentsApp, AddComment, NewComment} from '../comments-app';
-import {ClicksCounterFunc, Products, Planets, Planet, Product} from './parts';
+import {ClicksCounterFunc, Products, Planets, Planet, Product, Components} from './parts';
 import {ClicksCounter} from './parts/clicks-counter/ClicksCounter';
 import {CommentsAppFunc} from '../comments-app/CommentsAppFunc';
 import {BrowserRouter, Routes, Route, NavLink, Outlet} from 'react-router-dom';
@@ -17,7 +17,8 @@ export const paths = {
         comments: 'comments/',
         commentsAdd: 'add',
         commentsNew: 'new'
-    }
+    },
+    components: 'components'
 };
 
 export const App = () => (
@@ -42,6 +43,8 @@ export const App = () => (
                                 <Route index element={<Planets/>}/>
                                 <Route path={':id'} element={<Planet/>}/>
                             </Route>
+
+                            <Route path={paths.components} element={<Components />}/>
                         </Route>
                         {/*<Route path={'*'} element={<div>404</div>}/>*/}
                     </Routes>
@@ -65,6 +68,7 @@ const Nav = () => (
             <NavLink style={getNavLinkStyle} to={paths.comments.comments}> comments</NavLink>
             <NavLink style={getNavLinkStyle} to={paths.products}> products</NavLink>
             <NavLink style={getNavLinkStyle} to={paths.planets}> planets</NavLink>
+            <NavLink style={getNavLinkStyle} to={paths.components}> components</NavLink>
         </div>
         <Outlet />
     </div>
