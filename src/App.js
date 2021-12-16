@@ -1,27 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
 import {Checkbox} from './components';
+import {Routes, Route, Outlet, Link, BrowserRouter} from 'react-router-dom';
+
+const pathConfig = {
+    root: '/',
+    comments: 'comments'
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <Checkbox/>
-    </div>
+      <BrowserRouter>
+          <Routes>
+              <Route path={pathConfig.root} element={<Nav   />}>
+                  <Route index element={<div>main</div>} />
+                  <Route path={pathConfig.comments} element={<div>comments<img src={logo} className="App-logo" alt="logo" /></div>} />
+              </Route>
+          </Routes>
+      </BrowserRouter>
   );
 }
+
+const Nav = () => (
+  <div>
+      <div>
+          <Link to={pathConfig.root}>root</Link>
+          <Link to={pathConfig.comments}>comments</Link>
+      </div>
+
+      <Outlet/>
+  </div>
+);
 
 export default App;
