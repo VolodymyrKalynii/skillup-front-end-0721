@@ -1,19 +1,13 @@
-import React, {useContext, memo} from 'react';
+import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 
-import {SomeContext} from '../../../../context';
-import {SomeStore} from '../../../../CommentsApp';
+import {toggleCommentLikeAction} from '../../../../../../store/actions/comments';
 
 const CommentItemWrap = (p) => {
     const {id, userName, userAge, comment, isLiked} = p;
-    const {toggleIsLiked, someInputStr} = useContext(SomeContext);
-    // const {toggleIsLiked, someInputStr} = SomeStore;
-
-    console.log('SomeStore', SomeStore);
 
     const btnHandler = () => {
-
-        toggleIsLiked(id);
+        toggleCommentLikeAction(id);
     };
 
     return (
@@ -21,7 +15,6 @@ const CommentItemWrap = (p) => {
             <p>userName: {userName}</p>
             <p>userAge: {userAge}</p>
             <p>comment: {comment}</p>
-            <p>someInputStr: {someInputStr}</p>
             {/*<p>isShowCommentsWithLike: {isShowCommentsWithLike.toString()}</p>*/}
             {/*<p>filterStr: {filterStr}</p>*/}
             <button onClick={btnHandler}>

@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {ControlsContext} from '../../CommentsApp';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions} from '../../../../store/reducers/comments';
+import {addCommentAction} from '../../../../store/actions/comments';
 
 export const Controls = () => {
     const dispatch = useDispatch();
@@ -15,64 +15,9 @@ export const Controls = () => {
     return (
         <div>
             <input value={filterStr} onChange={handler} type='text'/>
-            <NewCommentWrap/>
         </div>
     );
 };
-
-const NewCommentWrap = () => {
-    const {addComment} = useContext(ControlsContext);
-
-    return <NewComment addComment={addComment}/>;
-};
-
-class NewComment extends React.Component {
-    state = {
-        userName: '',
-        comment: ''
-    }
-
-    inputHandler = (e) => {
-        this.setState({
-            userName: e.target.value
-        });
-    }
-
-    textareaHandler = (e) => {
-        this.setState({
-            comment: e.target.value
-        });
-    }
-
-    btnHandler = () => {
-        const {userName, comment} = this.state;
-
-        this.props.addComment({
-            userName,
-            comment,
-            isLiked: false,
-            userAge: Math.random(),
-            id: Date.now()
-        });
-    }
-    
-    render() {
-        const {userName, comment} = this.state;
-        
-        return (
-            <div>
-                <p>
-                    name: <input value={userName} onChange={this.inputHandler} type='text'/>
-                </p>
-                <p>
-                    comment: <textarea value={comment} onChange={this.textareaHandler} name='' id='' cols='30' rows='10'/>
-                </p>
-                <button onClick={this.btnHandler}>добавить</button>
-            </div>
-        );
-    }
-
-}
 
 // export class Controls extends React.Component {
 //     state = {

@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {Provider} from 'react-redux';
 import {CommentsApp, AddComment, NewComment} from '../comments-app';
-import {ClicksCounterFunc, Products, Planets, Planet, Product} from './parts';
+import {ClicksCounterFunc, Products, Planets, Planet, Product, Main} from './parts';
 import {ClicksCounter} from './parts/clicks-counter/ClicksCounter';
 import {CommentsAppFunc} from '../comments-app/CommentsAppFunc';
 import {BrowserRouter, Routes, Route, NavLink, Outlet} from 'react-router-dom';
 import {ErrorBoundary} from '../error-boundary/ErrorBoundary';
 import {store} from '../../store/store';
+import {CommentsAppWrapper} from '../comments-app/CommentsAppWrapper';
 
 export const paths = {
     main: '/',
@@ -29,7 +30,7 @@ export const App = () => (
                         <Route path={paths.main} element={<Nav/>}>
                             <Route index element={<Main/>} />
                             <Route path={paths.clicksCounter} element={<ClicksCounterFunc/>}/>
-                            <Route path={`${paths.comments.comments}`} element={<Nav2/>}>
+                            <Route path={`${paths.comments.comments}`} element={<CommentsAppWrapper/>}>
                                 <Route index element={<CommentsApp/>} />
                                 <Route path={paths.comments.commentsNew} element={<AddComment/>}/>
                                 <Route path={paths.comments.commentsAdd} element={<NewComment/>}/>
@@ -51,7 +52,7 @@ export const App = () => (
     </div>
 );
 
-const getNavLinkStyle = ({isActive}) => isActive
+export const getNavLinkStyle = ({isActive}) => isActive
     ? {
         fontWeight: 'bold',
         color: 'red'}
@@ -69,17 +70,6 @@ const Nav = () => (
         <Outlet />
     </div>
 );
-
-const Nav2 = () => (
-    <div>
-        <NavLink style={getNavLinkStyle} to={'./'}> comments</NavLink>
-        <NavLink style={getNavLinkStyle} to={paths.comments.commentsNew}> NewComment</NavLink>
-        <NavLink style={getNavLinkStyle} to={paths.comments.commentsAdd}> AddComment</NavLink>
-        <Outlet />
-    </div>
-);
-
-const Main = () => <div>main</div>;
 
 const CommentsRoute = () => (
     <>

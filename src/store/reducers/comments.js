@@ -18,6 +18,15 @@ const props = {
         setComments: (state, action) => {
             state.comments = action.payload;
         },
+        toggleCommentLike: (state, action) => {
+            const id = action.payload;
+
+            state.comments.forEach((comment) => {
+                if (comment.id === id) {
+                    comment.isLiked = !comment.isLiked;
+                }
+            });
+        },
         addComment: (state, action) => {
             // state.comments = action.payload;
             state.comments.push(action.payload);
