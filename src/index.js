@@ -1,22 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {App} from './components/app/App.jsx';
-
-import 'antd/dist/antd.css';
-import './scss/main.scss';
-import {store} from './store/store';
-import {incAction} from './store/actions/counter';
+import './index.css';
+import App from './App';
 
 ReactDOM.render(
-    <App/>,
-    document.getElementById('app')
+    <App />,
+  document.getElementById('root')
 );
-
-window.addEventListener('error', (e) => {
-    console.log('e', e);
-});
-
-store.subscribe(() => {
-    console.log(store.getState());
-});
-
