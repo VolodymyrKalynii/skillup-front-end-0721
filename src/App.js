@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {Checkbox} from './components';
-import {Routes, Route, Outlet, Link, BrowserRouter} from 'react-router-dom';
+import {Routes, Route, Outlet, Link, HashRouter} from 'react-router-dom';
 
 const pathConfig = {
     root: '/',
@@ -10,14 +10,14 @@ const pathConfig = {
 
 function App() {
   return (
-      <BrowserRouter>
+      <HashRouter>
           <Routes>
               <Route path={pathConfig.root} element={<Nav   />}>
                   <Route index element={<div>main</div>} />
                   <Route path={pathConfig.comments} element={<div>comments<img src={logo} className="App-logo" alt="logo" /></div>} />
               </Route>
           </Routes>
-      </BrowserRouter>
+      </HashRouter>
   );
 }
 
